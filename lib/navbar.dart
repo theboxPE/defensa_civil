@@ -1,6 +1,7 @@
 import 'package:defensa_civil/main.dart';
 import 'package:defensa_civil/noticias.dart';
 import 'package:defensa_civil/servicios.dart';
+import 'package:defensa_civil/historia.dart';
 import 'package:flutter/material.dart' show AssetImage, BuildContext, CircleAvatar, Colors, Column, Divider, Drawer, EdgeInsets, FontWeight, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 
 
@@ -41,7 +42,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Historia'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const Historia(),
                 ));
               },
             ),

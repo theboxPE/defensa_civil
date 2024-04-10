@@ -17,7 +17,7 @@ class Navbar extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/fp.jpg') //foto para un usuario o lo que sea mas bonito
+              backgroundImage: AssetImage('assets/') //foto para un usuario o lo que sea mas bonito
             ),
             const Text(
               'nombre usuario', //nombre de usuario si asi lo prefieren

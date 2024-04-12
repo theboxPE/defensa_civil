@@ -30,7 +30,7 @@ class CambiarClaveFormState extends State<CambiarClaveForm> {
         textColor: Colors.white,
       );
       return;
-    }
+    } 
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('defensaUser');

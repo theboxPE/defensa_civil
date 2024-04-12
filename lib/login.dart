@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:defensa_civil/components/my_button.dart';
 import 'package:defensa_civil/components/textfield.dart';
+import 'package:defensa_civil/post_login/navbar.dart';
 import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -55,7 +56,7 @@ class LoginPageState extends State<LoginPage> {
           // Navega a la página de noticias después de iniciar sesión
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const NoticiaPage()),
+            MaterialPageRoute(builder: (context) => const NavbarPost()),
           );
         } else {
           showDialog(
@@ -142,9 +143,6 @@ class LoginPageState extends State<LoginPage> {
               ),
 
               const SizedBox(height: 30),
-
-
-
 
               // sign in button
               MyButton(

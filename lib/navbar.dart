@@ -3,9 +3,11 @@ import 'package:defensa_civil/main.dart';
 import 'package:defensa_civil/miembros.dart';
 import 'package:defensa_civil/medidas_preventivas.dart';
 import 'package:defensa_civil/servicios.dart';
+import 'package:defensa_civil/acerca_de.dart';
+import 'package:defensa_civil/videos.dart';
 import 'package:defensa_civil/historia.dart';
 import 'package:defensa_civil/voluntario.dart';
-import 'package:flutter/material.dart' show BuildContext, Colors, Column, Divider, Drawer, EdgeInsets, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
+import 'package:flutter/material.dart' show BuildContext, Colors, Column, Divider, Drawer, EdgeInsets, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, StatelessWidget, Text, Widget;
 
 
 class Navbar extends StatelessWidget {
@@ -114,7 +116,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Acerca De'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const AboutPage(),
                 ));
               },
             ),

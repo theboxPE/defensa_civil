@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class MiembrosPage extends StatefulWidget {
+  const MiembrosPage({super.key});
+
   @override
-  _MiembrosPageState createState() => _MiembrosPageState();
+  MiembrosState createState() => MiembrosState();
 }
 
-class _MiembrosPageState extends State<MiembrosPage> {
+class MiembrosState extends State<MiembrosPage> {
   List<dynamic> _miembros = [];
 
   @override
@@ -41,12 +43,12 @@ class _MiembrosPageState extends State<MiembrosPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Error'),
+        title: const Text('Error'),
         content: Text(mensaje),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -57,13 +59,13 @@ class _MiembrosPageState extends State<MiembrosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Miembros'),
+        title: const Text('Miembros'),
       ),
       body: ListView.builder(
         itemCount: _miembros.length,
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(_miembros[index]['foto']),

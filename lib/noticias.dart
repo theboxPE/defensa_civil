@@ -1,63 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:defensa_civil/token.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NoticiaPage extends StatefulWidget {
   const NoticiaPage({super.key});
 
   @override
-  NoticiaPageState createState() => NoticiaPageState();
+  NoticiasPageState createState() => NoticiasPageState();
 }
 
-class NoticiaPageState extends State<NoticiaPage> {
-  List<dynamic> noticias = [];
-  String nombreUsuario = '';
+class NoticiasPageState extends State<NoticiaPage> {
+  List<dynamic> _noticias = []; // Lista para almacenar las noticias
 
   @override
   void initState() {
     super.initState();
-    cargarUsuario();
-    cargarNoticias();
+    _loadNoticias();
   }
 
-  Future<void> cargarUsuario() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? usuarioGuardado = prefs.getString('defensaUser');
-    if (usuarioGuardado != null) {
-      setState(() {
-        nombreUsuario = json.decode(usuarioGuardado)['nombre'];
-      });
-    }
-  }
+  Future<void> _loadNoticias() async {
+    // Obtener el token almacenado utilizando la instancia de TokenManager
+    final tokenManager = TokenManager();
+    String? token = tokenManager.token;
 
-  Future<void> cargarNoticias() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? usuarioGuardado = prefs.getString('defensaUser');
-    if (usuarioGuardado == null) {
-      // Si no hay un usuario registrado, redirigir a la página de inicio de sesión
-      Navigator.pushReplacementNamed(context, '/login');
-      return;
-    }
+    if (token != null) {
+      final url = Uri.parse(
+          "https://adamix.net/defensa_civil/def/noticias_especificas.php");
 
-    String token = json.decode(usuarioGuardado)['token'];
+      final response = await http.post(url, body: {'token': token});
+  
 
-    final url = Uri.parse("https://adamix.net/defensa_civil/def/noticias_especificas.php");
-    final response = await http.post(url, body: {'token': token});
-
-    final responseData = json.decode(response.body);
-    if (responseData['exito']) {
-      setState(() {
-        noticias = responseData['datos'];
-      });
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        if (jsonResponse['exito']) {
+          setState(() {
+            _noticias = jsonResponse['datos'];
+          });
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Error al cargar las noticias'),
+                content: Text(jsonResponse['mensaje']),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text(
+                  'Error de conexión. Por favor, inténtalo de nuevo más tarde.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } else {
-      Fluttertoast.showToast(
-        msg: 'Error al cargar las noticias: ${responseData['mensaje']}',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('No se ha encontrado un token almacenado.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -66,50 +95,18 @@ class NoticiaPageState extends State<NoticiaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Noticias'),
+        title: Text('Noticias'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              'Bienvenido $nombreUsuario a la Defensa Civil',
-              style: const TextStyle(fontSize: 24.0),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: noticias.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.network(noticias[index]['foto']),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              noticias[index]['titulo'],
-                              style: const TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 10.0),
-                            Text(noticias[index]['contenido']),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: _noticias.length,
+        itemBuilder: (context, index) {
+          final noticia = _noticias[index];
+          return ListTile(
+            title: Text(noticia['titulo']),
+            subtitle: Text(noticia['contenido']),
+            // Agrega más detalles de la noticia si es necesario
+          );
+        },
       ),
     );
   }

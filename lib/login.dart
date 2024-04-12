@@ -1,55 +1,95 @@
 import 'dart:convert';
 import 'package:defensa_civil/components/my_button.dart';
 import 'package:defensa_civil/components/textfield.dart';
+import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'noticias.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
 
-  //text editing controllers
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  // sign user in method
-  void signUserIn() async {
-    String cedula = usernameController.text;
-    String clave = passwordController.text;
+  Future<void> signUserIn() async {
+    final cedula = usernameController.text;
+    final clave = passwordController.text;
 
-    if(cedula.isEmpty || clave.isEmpty) {
-        Fluttertoast.showToast(
-        msg: 'Todos los campos son requeridos',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white
+    if (cedula.isEmpty || clave.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Campos requeridos'),
+            content: const Text('Por favor, completa todos los campos.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
       );
-
     } else {
-      final uri = Uri.parse('https://adamix.net/defensa_civil/def/iniciar_sesion.php');
-      final response = await http.post(uri, body: {
-        'cedula': cedula,
-        'clave': clave,
-      });
+      final url =
+          Uri.parse("https://adamix.net/defensa_civil/def/iniciar_sesion.php");
 
-      final responseData = json.decode(response.body);
+      final response =
+          await http.post(url, body: {'cedula': cedula, 'clave': clave});
 
-      if(responseData['exito']) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setString('defensaUser', json.encode(responseData['usuario']));
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        if (jsonResponse['exito']) {
+          // Almacena el token utilizando la clase TokenManager
+          TokenManager tokenManager = TokenManager();
+          final String token = jsonResponse['datos']['token'];
+          tokenManager.token = token;
 
-        Navigator.pushReplacementNamed(context, '/noticias');
-
+          // Navega a la página de noticias después de iniciar sesión
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NoticiaPage()),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Error de inicio de sesión'),
+                content: Text(jsonResponse['mensaje']),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       } else {
-        Fluttertoast.showToast(
-          msg: responseData['mensaje'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white, 
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text(
+                  'Error de conexión. Por favor, inténtalo de nuevo más tarde.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
         );
       }
     }
@@ -91,7 +131,7 @@ class LoginPage extends StatelessWidget {
               MytextField(
                 controller: usernameController,
                 hintText: 'Cedula',
-                obscureText: true,
+                obscureText: false,
               ),
 
               const SizedBox(height: 10),
@@ -100,7 +140,7 @@ class LoginPage extends StatelessWidget {
               MytextField(
                 controller: passwordController,
                 hintText: 'Clave',
-                obscureText: false,
+                obscureText: true,
               ),
 
               const SizedBox(height: 10),
@@ -168,8 +208,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
-
-          
             ],
           ),
         ),

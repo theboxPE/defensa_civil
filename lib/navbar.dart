@@ -1,7 +1,10 @@
+import 'package:defensa_civil/login.dart';
 import 'package:defensa_civil/main.dart';
+import 'package:defensa_civil/miembros.dart';
 import 'package:defensa_civil/noticias.dart';
 import 'package:defensa_civil/servicios.dart';
 import 'package:defensa_civil/historia.dart';
+import 'package:defensa_civil/voluntario.dart';
 import 'package:flutter/material.dart' show AssetImage, BuildContext, CircleAvatar, Colors, Column, Divider, Drawer, EdgeInsets, FontWeight, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 
 
@@ -15,19 +18,6 @@ class Navbar extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15.0),
         child: Column(
           children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/') //foto para un usuario o lo que sea mas bonito
-            ),
-            const Text(
-              'nombre usuario', //nombre de usuario si asi lo prefieren
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              'mensaje cualquiera', //se puede poner un mensaje cualquiera para este campo
-              style: TextStyle(fontSize: 16, color: Colors.lightBlue),
-            ),
-            const SizedBox(height: 5),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
@@ -60,7 +50,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Noticias'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const NoticiaPage(),
                 ));
               },
             ),
@@ -105,16 +95,16 @@ class Navbar extends StatelessWidget {
               title: const Text('Miembros'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const MiembrosPage(),
                 ));
               },
             ),
             ListTile(
               leading: const Icon(Icons.add),
-              title: const Text('Quiero ser Voluntario'),
+              title: const Text('Registrarse'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const RegisterForm(),
                 ));
               },
             ),
@@ -133,7 +123,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Iniciar Sesión'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const LoginPage(),
                 ));
               },
             ),

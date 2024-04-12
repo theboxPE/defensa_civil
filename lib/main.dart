@@ -1,3 +1,4 @@
+import 'package:defensa_civil/login.dart';
 import 'package:defensa_civil/navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -10,16 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Defensa Civil',
-      home: Scaffold(
-        drawer: const Navbar(),
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
-    );
+      home: LoginPage(),
+      );    
   }
 }

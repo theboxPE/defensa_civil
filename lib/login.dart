@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'package:defensa_civil/components/my_button.dart';
 import 'package:defensa_civil/components/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -11,8 +15,44 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   // sign user in method
-  void signUserIn() {
+  void signUserIn() async {
+    String cedula = usernameController.text;
+    String clave = passwordController.text;
 
+    if(cedula.isEmpty || clave.isEmpty) {
+        Fluttertoast.showToast(
+        msg: 'Todos los campos son requeridos',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white
+      );
+
+    } else {
+      final uri = Uri.parse('https://adamix.net/defensa_civil/def/iniciar_sesion.php');
+      final response = await http.post(uri, body: {
+        'cedula': cedula,
+        'clave': clave,
+      });
+
+      final responseData = json.decode(response.body);
+
+      if(responseData['exito']) {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString('defensaUser', json.encode(responseData['usuario']));
+
+        Navigator.pushReplacementNamed(context, '/noticias');
+
+      } else {
+        Fluttertoast.showToast(
+          msg: responseData['mensaje'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white, 
+        );
+      }
+    }
   }
 
   @override
@@ -36,7 +76,7 @@ class LoginPage extends StatelessWidget {
 
               //welcome back, you ve been missed!
               Text(
-                'Welcome back you\ve been missed!',
+                'Inicio de Sesion',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 16,
@@ -50,7 +90,7 @@ class LoginPage extends StatelessWidget {
               // username textfield
               MytextField(
                 controller: usernameController,
-                hintText: 'Username',
+                hintText: 'Cedula',
                 obscureText: true,
               ),
 
@@ -59,7 +99,7 @@ class LoginPage extends StatelessWidget {
               // password textfield
               MytextField(
                 controller: passwordController,
-                hintText: 'Password',
+                hintText: 'Clave',
                 obscureText: false,
               ),
 
@@ -73,7 +113,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'Forgot Password?',
+                      '?',
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
@@ -114,14 +154,14 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Not a member?',
+                    'No esta Registrado?',
                     style: TextStyle(
                       color: Colors.grey[700],
                     ),
                   ),
                   const SizedBox(width: 4),
                   const Text(
-                    'Register now',
+                    'Registrar ahora',
                     style: TextStyle(
                       color: Colors.blue, fontWeight: FontWeight.bold,
                     ),

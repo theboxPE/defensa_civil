@@ -12,7 +12,7 @@ class Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
+        padding: const EdgeInsets.only(top: 15.0),
         child: Column(
           children: [
             const CircleAvatar(
@@ -27,7 +27,7 @@ class Navbar extends StatelessWidget {
               'mensaje cualquiera', //se puede poner un mensaje cualquiera para este campo
               style: TextStyle(fontSize: 16, color: Colors.lightBlue),
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 5),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),

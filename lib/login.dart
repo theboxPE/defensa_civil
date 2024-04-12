@@ -4,16 +4,16 @@ import 'package:defensa_civil/components/textfield.dart';
 import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'noticias.dart';
+import 'post_login/noticias_login.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           // Navega a la página de noticias después de iniciar sesión
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => NoticiaPage()),
+            MaterialPageRoute(builder: (context) => const NoticiaPage()),
           );
         } else {
           showDialog(
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 size: 100,
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
 
               //welcome back, you ve been missed!
               Text(
@@ -123,9 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
               ),
 
-
               const SizedBox(height: 25),
-
 
               // username textfield
               MytextField(
@@ -143,24 +141,10 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
 
 
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              ),
 
-              const SizedBox(height: 25),
 
               // sign in button
               MyButton(
@@ -169,45 +153,6 @@ class _LoginPageState extends State<LoginPage> {
 
 
               const SizedBox(height: 50),
-
-
-              // or continue with 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-
-              const SizedBox(height: 50),
-
-              //not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'No esta Registrado?',
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Registrar ahora',
-                    style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

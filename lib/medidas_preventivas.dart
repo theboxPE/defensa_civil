@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class MedidasPreventivasPage extends StatefulWidget {
+  const MedidasPreventivasPage({super.key});
+
   @override
-  _MedidasPreventivasPageState createState() => _MedidasPreventivasPageState();
+  MedidasPreventivasPageState createState() => MedidasPreventivasPageState();
 }
 
-class _MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
-    List<dynamic> _medidasP = [];
+class MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
+  List<dynamic> _medidasP = [];
 
   @override
   void initState() {
@@ -17,7 +18,7 @@ class _MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
     obtenerMedidasP();
   }
 
- Future<void> obtenerMedidasP() async {
+  Future<void> obtenerMedidasP() async {
     final url = Uri.parse("https://adamix.net/defensa_civil/def/medidas_preventivas.php");
 
     try {
@@ -30,7 +31,7 @@ class _MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
         });
       } else {
         mostrarError(
-            'Hubo un error al obtener los miembros. Por favor, inténtalo de nuevo más tarde.');
+            'Hubo un error al obtener las medidas preventivas. Por favor, inténtalo de nuevo más tarde.');
       }
     } catch (error) {
       mostrarError(
@@ -55,40 +56,51 @@ class _MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
   }
 
   @override
- Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Medidas Preventivas'),
-    ),
-    body: ListView.builder(
-      itemCount: _medidasP.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            title: Text(_medidasP[index]['titulo']),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(_medidasP[index]['descripcion']),
-                SizedBox(height: 8), // Espacio entre el texto y la imagen
-                Container(
-                  width: double.infinity, // Ancho de la imagen igual al ancho del ListTile
-                  height: 200, // Alto deseado para la imagen
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      _medidasP[index]['foto'],
-                      fit: BoxFit.cover,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Medidas Preventivas'),
+      ),
+      body: ListView.builder(
+        itemCount: _medidasP.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(_medidasP[index]['titulo']),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        const TextSpan(
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: _medidasP[index]['descripcion']),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8), // Espacio entre el texto y la imagen
+                  SizedBox(
+                    width: double.infinity, // Ancho de la imagen igual al ancho del ListTile
+                    height: 200, // Alto deseado para la imagen
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder_image.jpg', // Ruta de la imagen de transición
+                        image: _medidasP[index]['foto'], // URL de la imagen principal
+                        fit: BoxFit.cover, // Ajuste de la imagen
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
+          );
+        },
+      ),
+    );
+  }
 }

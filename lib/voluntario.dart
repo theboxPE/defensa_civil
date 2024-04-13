@@ -1,8 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/material.dart';
-
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -66,67 +65,18 @@ class RegistroFormState extends State<RegisterForm> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                controller: cedulaController,
-                decoration: const InputDecoration(labelText: 'Cédula'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: nombreController,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: apellidoController,
-                decoration: const InputDecoration(labelText: 'Apellido'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: claveController,
-                decoration: const InputDecoration(labelText: 'Clave'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: correoController,
-                decoration: const InputDecoration(labelText: 'Correo'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: telefonoController,
-                decoration: const InputDecoration(labelText: 'Teléfono'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Este campo es requerido';
-                  }
-                  return null;
-                },
-              ),
+              _buildTextFormField(cedulaController, 'Cédula'),
+              const SizedBox(height: 20),
+              _buildTextFormField(nombreController, 'Nombre'),
+              const SizedBox(height: 20),
+              _buildTextFormField(apellidoController, 'Apellido'),
+              const SizedBox(height: 20),
+              _buildTextFormField(claveController, 'Clave', obscureText: true),
+              const SizedBox(height: 20),
+              _buildTextFormField(correoController, 'Correo'),
+              const SizedBox(height: 20),
+              _buildTextFormField(telefonoController, 'Teléfono'),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _registrar,
                 child: const Text('Registrar'),
@@ -137,5 +87,33 @@ class RegistroFormState extends State<RegisterForm> {
       ),
     );
   }
-}
 
+  Widget _buildTextFormField(
+    TextEditingController controller,
+    String labelText, {
+    bool obscureText = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
+        filled: true,
+        fillColor: Colors.grey[200],
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Este campo es requerido';
+        }
+        return null;
+      },
+    );
+  }
+}

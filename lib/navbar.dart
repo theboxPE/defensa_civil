@@ -61,7 +61,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Videos'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const VideosPage(),
                 ));
               },
             ),
@@ -88,7 +88,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Medidas Preventivas'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MedidasPreventivasPage(),
+                  builder: (context) => const MedidasPreventivasPage(),
                 ));
               },
             ),

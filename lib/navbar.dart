@@ -2,6 +2,7 @@ import 'package:defensa_civil/login.dart';
 import 'package:defensa_civil/main.dart';
 import 'package:defensa_civil/miembros.dart';
 import 'package:defensa_civil/medidas_preventivas.dart';
+import 'package:defensa_civil/noticias.dart';
 import 'package:defensa_civil/servicios.dart';
 import 'package:defensa_civil/acerca_de.dart';
 import 'package:defensa_civil/videos.dart';
@@ -52,7 +53,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Noticias'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const NoticiasPage(),
                 ));
               },
             ),

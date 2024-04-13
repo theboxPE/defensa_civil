@@ -15,7 +15,7 @@ class Historia extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              'assets/defensa.png', // Asegúrate de tener la imagen en la carpeta "assets"
+              'assets/defensa.png', 
               width: double.infinity,
               fit: BoxFit.cover,
             ),

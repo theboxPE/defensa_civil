@@ -55,27 +55,62 @@ class MiembrosState extends State<MiembrosPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Miembros'),
-      ),
-      body: ListView.builder(
-        itemCount: _miembros.length,
-        itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(_miembros[index]['foto']),
-              ),
-              title: Text(_miembros[index]['nombre']),
-              subtitle: Text(_miembros[index]['cargo']),
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Miembros'),
+    ),
+    body: ListView.builder(
+      itemCount: _miembros.length,
+      itemBuilder: (context, index) {
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Colocar la imagen del miembro
+                Container(
+                  width: MediaQuery.of(context).size.width, // Ancho de la imagen
+                  height: 200, // Alto de la imagen
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(_miembros[index]['foto']), // URL de la imagen
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                // Mostrar el nombre como título
+                Text(
+                  _miembros[index]['nombre'],
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // Mostrar el cargo como subtítulo
+                Text(
+                  _miembros[index]['cargo'],
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
-    );
-  }
+          ),
+        );
+      },
+    ),
+  );
 }
+
+}
+
+
+

@@ -58,67 +58,72 @@ class NoticiasPageState extends State<NoticiasPage> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Noticias'),
-      ),
-      body: _noticias.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _noticias.length,
-              itemBuilder: (context, index) {
-                final noticia = _noticias[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(10),
-                      title: Text(
-                        noticia['titulo'],
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          Text(
-                            noticia['contenido'],
-                            style: const TextStyle(fontSize: 16),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Noticias'),
+    ),
+    body: _noticias.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            itemCount: _noticias.length,
+            itemBuilder: (context, index) {
+              final noticia = _noticias[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ), 
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          noticia['titulo'],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Fecha: ${noticia['fecha']}',
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 10),
+                        // Aquí se coloca la imagen
+                        Container(
+                          width: MediaQuery.of(context).size.width, // Ancho de la imagen
+                          height: 200, // Alto de la imagen
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(noticia['foto']), // URL de la imagen
                             ),
                           ),
-                        ],
-                      ),
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          noticia['foto'],
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
                         ),
-                      ),
+                        const SizedBox(height: 10),
+                        Text(
+                          noticia['contenido'],
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Fecha: ${noticia['fecha']}',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
-    );
-  }
+                ),
+              );
+            },
+          ),
+  );
+}
+
+
 }

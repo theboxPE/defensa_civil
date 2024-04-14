@@ -31,15 +31,19 @@ class MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
         });
       } else {
         mostrarError(
-            'Hubo un error al obtener las medidas preventivas. Por favor, inténtalo de nuevo más tarde.');
+            context,
+            'Hubo un error al obtener las medidas preventivas. Por favor, inténtalo de nuevo más tarde.',
+          );
       }
     } catch (error) {
       mostrarError(
-          'Hubo un error al realizar la solicitud. Por favor, inténtalo de nuevo más tarde.');
+          context,
+          'Hubo un error al realizar la solicitud. Por favor, inténtalo de nuevo más tarde.',
+        );
     }
   }
 
-  void mostrarError(String mensaje) {
+  void mostrarError(BuildContext context, String mensaje) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

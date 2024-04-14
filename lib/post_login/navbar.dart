@@ -1,5 +1,6 @@
 import 'package:defensa_civil/post_login/clave.dart';
 import 'package:defensa_civil/post_login/noticias_login.dart';
+import 'package:defensa_civil/post_login/repotar_situacion.dart';
 import 'package:flutter/material.dart' show AssetImage, BuildContext, CircleAvatar, Colors, Column, Drawer, EdgeInsets, FontWeight, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 
 
@@ -40,7 +41,7 @@ class NavbarPost extends StatelessWidget {
               title: const Text('Reportar situacion'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const NoticiaPage(),
+                  builder: (context) => ReportPage(),
                 ));
               },
             ),

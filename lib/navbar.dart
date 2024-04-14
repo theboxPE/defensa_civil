@@ -1,3 +1,4 @@
+import 'package:defensa_civil/albergues.dart';
 import 'package:defensa_civil/login.dart';
 import 'package:defensa_civil/main.dart';
 import 'package:defensa_civil/miembros.dart';
@@ -44,7 +45,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Servicios'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const ServiciosPage(),
                 ));
               },
             ),
@@ -62,7 +63,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Videos'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const VideosPage(),
+                  builder: (context) => const MyApp(),
                 ));
               },
             ),
@@ -71,7 +72,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Albergues'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const AlberguesPage(),
                 ));
               },
             ),

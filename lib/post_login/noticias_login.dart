@@ -42,12 +42,12 @@ class NoticiasPageState extends State<NoticiaPage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Error al cargar las noticias'),
+                title: const Text('Error al cargar las noticias'),
                 content: Text(jsonResponse['mensaje']),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               );
@@ -59,13 +59,13 @@ class NoticiasPageState extends State<NoticiaPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text(
+              title: const Text('Error'),
+              content: const Text(
                   'Error de conexión. Por favor, inténtalo de nuevo más tarde.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -77,12 +77,12 @@ class NoticiasPageState extends State<NoticiaPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('No se ha encontrado un token almacenado.'),
+            title: const Text('Error'),
+            content: const Text('No se ha encontrado un token almacenado.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -95,7 +95,7 @@ class NoticiasPageState extends State<NoticiaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Noticias'),
+        title: const Text('Noticias'),
       ),
       body: ListView.builder(
         itemCount: _noticias.length,

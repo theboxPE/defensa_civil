@@ -1,0 +1,25 @@
+{
+    "graalvm.installations": [
+        "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1"
+    ],
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1",
+            "default": true
+        }
+    ],
+    "graalvm.home": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1",
+    "terminal.integrated.env.windows": {
+        "GRAALVM_HOME": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1",
+        "JAVA_HOME": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1",
+        "PATH": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1\\bin;${env:PATH}"
+    },
+    "java.home": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1",
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "c:\\Program Files\\Android\\Android Studio\\jbr\\graalvm-jdk-21.0.2+13.1"
+        }
+    ]
+}

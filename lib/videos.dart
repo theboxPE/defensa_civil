@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideosPage extends StatefulWidget {
   const VideosPage({super.key});
@@ -20,7 +20,8 @@ class VideosState extends State<VideosPage> {
   }
 
   Future<void> obtenerVideos() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/def/videos.php");
+    final url =
+        Uri.parse("https://adamix.net/defensa_civil/def/videos.php");
 
     try {
       final response = await http.get(url);
@@ -74,7 +75,14 @@ class VideosState extends State<VideosPage> {
                     subtitle: Text(video['descripcion']),
                     trailing: Text(video['fecha']),
                     onTap: () {
-                      launchURL(video['link']);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReproductorYouTube(
+                            videoUrl: video['link'],
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );
@@ -82,12 +90,53 @@ class VideosState extends State<VideosPage> {
             ),
     );
   }
+}
 
-  launchURL(String link) async {
-    if (await canLaunch(link)) {
-      await launch(link);
-    } else {
-      mostrarError('No se puede abrir el enlace');
-    }
+class ReproductorYouTube extends StatefulWidget {
+  final String videoUrl;
+
+  const ReproductorYouTube({required this.videoUrl, super.key});
+
+  @override
+  ReproductorYouTubeState createState() => ReproductorYouTubeState();
+}
+
+class ReproductorYouTubeState extends State<ReproductorYouTube> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '',
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reproductor de YouTube'),
+      ),
+      body: Center(
+        child: YoutubePlayer(
+          controller: _controller,
+          showVideoProgressIndicator: true,
+          progressIndicatorColor: Colors.blueAccent,
+          onReady: () {
+            //print('Player is ready.');
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }

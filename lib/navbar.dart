@@ -62,7 +62,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Videos'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const VideosPage(),
+                  builder: (context) => const MyApp(),
                 ));
               },
             ),

@@ -1,3 +1,4 @@
+import 'package:defensa_civil/voluntario.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -26,8 +27,36 @@ class MyButton extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          ),
+        ),
       ),
+    );
+  }
+}
+
+
+class MyButton2 extends StatelessWidget {
+  
+  const MyButton2({super.key, required RegisterForm onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'No esta resgistrado?',
+          style: TextStyle(
+            color: Colors.grey[700],
+          ),
+        ),
+        const SizedBox(width: 4),
+        const Text(
+          'Registrar ahora',
+          style: TextStyle(
+            color: Colors.blue, fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:defensa_civil/login/my_button.dart';
 import 'package:defensa_civil/login/textfield.dart';
 import 'package:defensa_civil/post_login/navbar.dart';
 import 'package:defensa_civil/token.dart';
+import 'package:defensa_civil/voluntario.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -150,7 +151,11 @@ class LoginPageState extends State<LoginPage> {
               ),
 
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 100),
+
+              const MyButton2(
+                onTap: RegisterForm() 
+              ),
             ],
           ),
         ),

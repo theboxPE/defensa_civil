@@ -21,13 +21,13 @@ class Servicio {
 }
 
 class ServiciosPage extends StatefulWidget {
-  const ServiciosPage({Key? key}) : super(key: key);
+  const ServiciosPage({super.key});
 
   @override
-  _ServiciosPageState createState() => _ServiciosPageState();
+  ServiciosPageState createState() => ServiciosPageState();
 }
 
-class _ServiciosPageState extends State<ServiciosPage> {
+class ServiciosPageState extends State<ServiciosPage> {
   List<Servicio> _servicios = [];
 
   @override

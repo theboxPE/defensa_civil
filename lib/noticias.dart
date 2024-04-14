@@ -58,13 +58,13 @@ class NoticiasPageState extends State<NoticiasPage> {
       ),
     );
   }
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Noticias'),
-    ),
-    body: _noticias.isEmpty
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Noticias'),
+      ),
+      body: _noticias.isEmpty
         ? const Center(child: CircularProgressIndicator())
         : ListView.builder(
             itemCount: _noticias.length,
@@ -122,8 +122,8 @@ Widget build(BuildContext context) {
               );
             },
           ),
-  );
+    );
+  }
+
 }
 
-
-}

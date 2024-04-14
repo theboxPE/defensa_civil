@@ -9,11 +9,13 @@ import 'package:location/location.dart';
 
 
 class ReportPage extends StatefulWidget {
+  const ReportPage({super.key});
+
   @override
-  _ReportPageState createState() => _ReportPageState();
+  ReportPageState createState() => ReportPageState();
 }
 
-class _ReportPageState extends State<ReportPage> {
+class ReportPageState extends State<ReportPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -44,7 +46,7 @@ class _ReportPageState extends State<ReportPage> {
       return;
     }
     // Envía los datos a la API
-    final url = 'https://adamix.net/defensa_civil/def/nueva_situacion.php';
+    const url = 'https://adamix.net/defensa_civil/def/nueva_situacion.php';
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
@@ -64,10 +66,10 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reportar Situación de Emergencia'),
+        title: const Text('Reportar Situación de Emergencia'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -75,7 +77,7 @@ class _ReportPageState extends State<ReportPage> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: InputDecoration(labelText: 'Título'),
+                decoration: const InputDecoration(labelText: 'Título'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa un título';
@@ -83,10 +85,10 @@ class _ReportPageState extends State<ReportPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Descripción'),
+                decoration: const InputDecoration(labelText: 'Descripción'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa una descripción';
@@ -94,21 +96,21 @@ class _ReportPageState extends State<ReportPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               _image == null
                   ? TextButton.icon(
                       onPressed: _getImage,
-                      icon: Icon(Icons.camera),
-                      label: Text('Tomar Foto'),
+                      icon: const Icon(Icons.camera),
+                      label: const Text('Tomar Foto'),
                     )
                   : Image.file(_image!),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () async {
                   await _getLocation();
                   await _reportEmergency();
                 },
-                child: Text('Enviar Reporte'),
+                child: const Text('Enviar Reporte'),
               ),
             ],
           ),

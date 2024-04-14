@@ -83,7 +83,7 @@ Widget build(BuildContext context) {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 // Mostrar el nombre como título
                 Text(
                   _miembros[index]['nombre'],

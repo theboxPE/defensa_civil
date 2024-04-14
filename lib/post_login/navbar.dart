@@ -41,7 +41,7 @@ class NavbarPost extends StatelessWidget {
               title: const Text('Reportar situacion'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ReportPage(),
+                  builder: (context) => const ReportPage(),
                 ));
               },
             ),

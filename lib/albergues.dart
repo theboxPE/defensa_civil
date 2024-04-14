@@ -38,16 +38,16 @@ class Albergue {
 }
 
 class AlberguesPage extends StatefulWidget {
-  const AlberguesPage({Key? key}) : super(key: key);
+  const AlberguesPage({super.key});
 
   @override
-  _AlberguesPageState createState() => _AlberguesPageState();
+  AlberguesPageState createState() => AlberguesPageState();
 }
 
-class _AlberguesPageState extends State<AlberguesPage> {
+class AlberguesPageState extends State<AlberguesPage> {
   List<Albergue> _albergues = [];
   List<Albergue> _alberguesFiltrados = [];
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {

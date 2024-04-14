@@ -56,7 +56,7 @@ class ReportPageState extends State<ReportPage> {
         'foto': base64Encode(_image!.readAsBytesSync()),
         'latitud': _latitude,
         'longitud': _longitude,
-        'token': // Asegúrate de reemplazar 'TU_TOKEN' con el token real
+        'token': tokenManager // Asegúrate de reemplazar 'TU_TOKEN' con el token real
       }),
     );
     print(response.body);

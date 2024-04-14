@@ -82,16 +82,16 @@ class MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 8), // Espacio entre el texto y la imagen
+                  const SizedBox(height: 8), 
                   SizedBox(
-                    width: double.infinity, // Ancho de la imagen igual al ancho del ListTile
-                    height: 200, // Alto deseado para la imagen
+                    width: double.infinity,
+                    height: 200,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder_image.jpg', // Ruta de la imagen de transición
-                        image: _medidasP[index]['foto'], // URL de la imagen principal
-                        fit: BoxFit.cover, // Ajuste de la imagen
+                        placeholder: 'assets/placeholder_image.jpg', 
+                        image: _medidasP[index]['foto'], 
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

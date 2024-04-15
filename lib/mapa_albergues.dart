@@ -65,17 +65,12 @@ class MiembrosState extends State<MapaPage> {
         title: const Text(
           'Mapa de Albergues',
           style: TextStyle(color: Colors.white),
-          title: Text(
-          'Mapa - ${_mapa[index]['']} ${_mapa[index]['']}',
-          style: const TextStyle(color: Colors.white),
         ),
       ),
       body:FlutterMap(
         options: MapOptions(
-                center: LatLng(_mapa[0]['lat'], _mapa[0]['lng']),
-                zoom: 10.
-          initialCenter: LatLng(),
-          initialZoom: 15.0,
+          center: LatLng(_mapa[0]['lat'], _mapa[0]['lng']),
+          zoom: 10.0,
         ),
         children: [
           TileLayer(
@@ -88,11 +83,6 @@ class MiembrosState extends State<MapaPage> {
                 width: 80.0,
                 height: 80.0,
                 point: LatLng(albergue['lat'], albergue['lng']),
-              markers: [
-              Marker(
-                width: 80.0,
-                height: 80.0,
-                point: LatLng(),
                 child: GestureDetector(
                   onTap: () {
                     showDialog(
@@ -117,19 +107,6 @@ class MiembrosState extends State<MapaPage> {
                               ),
                               Text(
                                 'Longitud: ${albergue['lng']}',
-                                'Nombre: ${} ${}',
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                              Text(
-                                'Ciudad: ${}',
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                              Text(
-                                'Latitud: ${}',
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                              Text(
-                                'Longitud: ${}',
                                 style: const TextStyle(color: Colors.black),
                               ),
                             ],
@@ -157,10 +134,10 @@ class MiembrosState extends State<MapaPage> {
                 ),
               ),
             ).toList(),
-            ],
           ),
         ],
       ),
     );
   }
 }
+

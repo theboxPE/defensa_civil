@@ -1,7 +1,7 @@
 import 'package:defensa_civil/albergues.dart';
-import 'package:defensa_civil/home.dart';
 import 'package:defensa_civil/login/login.dart';
 import 'package:defensa_civil/main.dart';
+import 'package:defensa_civil/mapa_albergues.dart';
 import 'package:defensa_civil/miembros.dart';
 import 'package:defensa_civil/medidas_preventivas.dart';
 import 'package:defensa_civil/noticias.dart';
@@ -73,7 +73,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Mapa Albergues'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => const MapaPage(),
                 ));
               },
             ),

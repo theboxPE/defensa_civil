@@ -1,4 +1,5 @@
 import 'package:defensa_civil/albergues.dart';
+import 'package:defensa_civil/home.dart';
 import 'package:defensa_civil/login/login.dart';
 import 'package:defensa_civil/main.dart';
 import 'package:defensa_civil/miembros.dart';
@@ -22,15 +23,6 @@ class Navbar extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15.0),
         child: Column(
           children: [
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyApp(), 
-                ));
-              },
-            ),
             ListTile(
               leading: const Icon(Icons.description),
               title: const Text('Historia'),
@@ -63,7 +55,7 @@ class Navbar extends StatelessWidget {
               title: const Text('Videos'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const VideosPage(),
+                  builder: (context) => const MyApp(),
                 ));
               },
             ),

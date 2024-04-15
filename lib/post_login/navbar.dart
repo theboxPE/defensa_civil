@@ -1,6 +1,9 @@
+import 'package:defensa_civil/login/login.dart';
 import 'package:defensa_civil/post_login/clave.dart';
 import 'package:defensa_civil/post_login/noticias_login.dart';
 import 'package:defensa_civil/post_login/repotar_situacion.dart';
+import 'package:defensa_civil/post_login/situaciones.dart';
+import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart' show AssetImage, BuildContext, CircleAvatar, Colors, Column, Drawer, EdgeInsets, FontWeight, Icon, Icons, ListTile, MaterialPageRoute, Navigator, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 
 
@@ -16,10 +19,10 @@ class NavbarPost extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/')
+              backgroundImage: AssetImage('../assets/Usuaio.jpg')
             ),
             const Text(
-              'nombre usuario',
+              'Usuario',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const Text(
@@ -50,7 +53,7 @@ class NavbarPost extends StatelessWidget {
               title: const Text('Mis situaciones'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const NoticiaPage(),
+                  builder: (context) => const SituacionesPage(),
                 ));
               },
             ),

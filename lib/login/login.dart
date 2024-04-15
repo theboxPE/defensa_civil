@@ -10,14 +10,18 @@ import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
   @override
   LoginPageState createState() => LoginPageState();
+  obt(){
+
+  }
 }
 
 class LoginPageState extends State<LoginPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  List<dynamic>  _user = []; // Lista para almacenar las noticias
+
 
   Future<void> signUserIn() async {
     final cedula = usernameController.text;
@@ -49,10 +53,12 @@ class LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         if (jsonResponse['exito']) {
+          print(jsonResponse);
           // Almacena el token utilizando la clase TokenManager
           TokenManager tokenManager = TokenManager();
           final String token = jsonResponse['datos']['token'];
           tokenManager.token = token;
+          
 
           // Navega a la página de noticias después de iniciar sesión
           Navigator.pushReplacement(

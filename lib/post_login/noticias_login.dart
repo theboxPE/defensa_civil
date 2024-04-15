@@ -35,7 +35,9 @@ class NoticiasPageState extends State<NoticiaPage> {
         final jsonResponse = json.decode(response.body);
         if (jsonResponse['exito']) {
           setState(() {
+            print(jsonResponse);
             _noticias = jsonResponse['datos'];
+            print(_noticias);
           });
         } else {
           showDialog(

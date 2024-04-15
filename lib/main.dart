@@ -1,3 +1,4 @@
+import 'package:defensa_civil/home.dart';
 import 'package:flutter/material.dart';
 import 'package:defensa_civil/navbar.dart';
 
@@ -14,11 +15,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         drawer: const Navbar(),
         appBar: AppBar(
-          title: const Text('Material App Bar'),
+          title: const Text('Defensa Civil'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: HomePage(), // Reemplazar el widget Center por la página HomePage
       ),
     );
   }

@@ -62,15 +62,15 @@ class MiembrosState extends State<MapaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Mapa - ${_mapa[index]['']} ${_mapa[index]['']}',
-          style: const TextStyle(color: Colors.white),
+        title: const Text(
+          'Mapa de Albergues',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body:FlutterMap(
         options: MapOptions(
-          initialCenter: LatLng(),
-          initialZoom: 15.0,
+                center: LatLng(_mapa[0]['lat'], _mapa[0]['lng']),
+                zoom: 10.0,
         ),
         children: [
           TileLayer(
@@ -78,11 +78,11 @@ class MiembrosState extends State<MapaPage> {
             subdomains: const ['a', 'b', 'c'],
           ),
           MarkerLayer(
-            markers: [
+            markers: _mapa.map((albergue) =>
               Marker(
                 width: 80.0,
                 height: 80.0,
-                point: LatLng(),
+                point: LatLng(albergue['lat'], albergue['lng']),
                 child: GestureDetector(
                   onTap: () {
                     showDialog(
@@ -98,19 +98,15 @@ class MiembrosState extends State<MapaPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'Nombre: ${} ${}',
+                                'Ciudad: ${albergue['ciudad']}',
                                 style: const TextStyle(color: Colors.black),
                               ),
                               Text(
-                                'Ciudad: ${}',
+                                'Latitud: ${albergue['lat']}',
                                 style: const TextStyle(color: Colors.black),
                               ),
                               Text(
-                                'Latitud: ${}',
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                              Text(
-                                'Longitud: ${}',
+                                'Longitud: ${albergue['lng']}',
                                 style: const TextStyle(color: Colors.black),
                               ),
                             ],
@@ -137,10 +133,11 @@ class MiembrosState extends State<MapaPage> {
                   ),
                 ),
               ),
-            ],
+            ).toList(),
           ),
         ],
       ),
     );
   }
 }
+

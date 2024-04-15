@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
-
-
+import 'package:defensa_civil/token.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -22,7 +20,6 @@ class ReportPageState extends State<ReportPage> {
   File? _image;
   late double _latitude;
   late double _longitude;
-  TokenManager tokenManager = TokenManager();
 
   Future<void> _getLocation() async {
     LocationData locationData = await Location().getLocation();
@@ -33,7 +30,7 @@ class ReportPageState extends State<ReportPage> {
   }
 
   Future<void> _getImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -43,33 +40,88 @@ class ReportPageState extends State<ReportPage> {
 
   Future<void> _reportEmergency() async {
     if (!_formKey.currentState!.validate()) {
+      return ; // Si el formulario no es válido, no proceder.
+    }
+    final tokenManager = TokenManager();
+    print(tokenManager);
+    String? token = tokenManager.token;
+    print(token);
+    print("correcto en el token");
+    if (token == null) {
+      print("correcto token");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('No se ha encontrado un token almacenado.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
       return;
     }
-    // Envía los datos a la API
-    const url = 'https://adamix.net/defensa_civil/def/nueva_situacion.php';
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
+    String? imageBase64;
+    if (_image != null) {
+      final bytes = await _image!.readAsBytes();
+      imageBase64 = base64Encode(bytes);
+    }
+
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/nueva_situacion.php");
+  print(token);
+    final response = await http.post(url, body: {
         'titulo': _titleController.text,
         'descripcion': _descriptionController.text,
-        'foto': base64Encode(_image!.readAsBytesSync()),
-        'latitud': _latitude,
-        'longitud': _longitude,
-        'token': tokenManager // Asegúrate de reemplazar 'TU_TOKEN' con el token real
-      }),
+        'foto': imageBase64 ?? 'sgsgs', // Envía 'sgsgs' si no hay imagen
+        'latitud': _latitude.toString(),
+        'longitud': _longitude.toString(),
+        'token': token,
+      },
     );
-    print(response.body);
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['exito']) {
+        print(jsonResponse['mensaje']);
+        print("correcto aqui datos");
+      } else {
+        _showErrorDialog(jsonResponse['mensaje']);
+        print("Eror");
+      }
+    } else {
+      _showErrorDialog('Error de conexión. Por favor, inténtalo de nuevo más tarde.');
+      print("Error");
+    }
   }
 
-  @override
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reportar Situación de Emergencia'),
+        title: Text('Reportar Situación de Emergencia'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -77,7 +129,7 @@ class ReportPageState extends State<ReportPage> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Título'),
+                decoration: InputDecoration(labelText: 'Título'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa un título';
@@ -85,10 +137,10 @@ class ReportPageState extends State<ReportPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16.0),
+              SizedBox(height: 16.0),
               TextFormField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(labelText: 'Descripción'),
+                decoration: InputDecoration(labelText: 'Descripción'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingresa una descripción';
@@ -96,21 +148,21 @@ class ReportPageState extends State<ReportPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16.0),
-              _image == null
+              SizedBox(height: 16.0),
+              /*_image == null
                   ? TextButton.icon(
                       onPressed: _getImage,
-                      icon: const Icon(Icons.camera),
-                      label: const Text('Tomar Foto'),
+                      icon: Icon(Icons.camera),
+                      label: Text('Tomar Foto'),
                     )
-                  : Image.file(_image!),
-              const SizedBox(height: 16.0),
+                  : Image.file(_image!),*/
+              SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () async {
                   await _getLocation();
                   await _reportEmergency();
                 },
-                child: const Text('Enviar Reporte'),
+                child: Text('Enviar Reporte'),
               ),
             ],
           ),

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Defensa Civil'),
         ),
-        body: HomePage(), // Reemplazar el widget Center por la página HomePage
+        body: /*const HomePage()*/ const Center(child: Text('hello word')) // Reemplazar el widget Center por la página HomePage
       ),
     );
   }

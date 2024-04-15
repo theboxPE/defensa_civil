@@ -1,8 +1,8 @@
+import 'package:defensa_civil/token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CambiarClaveForm extends StatefulWidget {
   const CambiarClaveForm({super.key});
@@ -32,8 +32,9 @@ class CambiarClaveFormState extends State<CambiarClaveForm> {
       return;
     } 
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('defensaUser');
+    // Obtener el token almacenado utilizando la instancia de TokenManager
+    final tokenManager = TokenManager();
+    String? token = tokenManager.token;
 
     if (token == null) {
       print('Token no encontrado en el almacenamiento local');

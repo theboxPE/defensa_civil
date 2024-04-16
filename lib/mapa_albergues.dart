@@ -70,7 +70,6 @@ class MiembrosState extends State<MapaPage> {
       body:FlutterMap(
         options: MapOptions(
           center: LatLng(_mapa[0]['lat'], _mapa[0]['lng']),
-          zoom: 10.0,
         ),
         children: [
           TileLayer(

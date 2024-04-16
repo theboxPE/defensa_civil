@@ -1,8 +1,11 @@
 allprojects {
+    ext.kotlin_version = '1.9.23'
     repositories {
-        google()
-        mavenCentral()
+      google()
+      mavenCentral()
     }
+
+    
 }
 
 rootProject.buildDir = '../build'
@@ -16,3 +19,5 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+
